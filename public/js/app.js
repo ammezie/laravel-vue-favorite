@@ -12069,49 +12069,46 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 
 /* harmony default export */ __webpack_exports__["default"] = {
-    props: ['ad', 'user', 'favorite'],
+    props: ['post', 'favorited'],
 
     data: function data() {
         return {
-            favorited: ''
+            isFavorited: ''
         };
     },
 
     mounted: function mounted() {
         if (this.isFavorite) {
-            this.favorited = true;
+            this.isFavorited = true;
         } else {
-            this.favorited = false;
+            this.isFavorited = false;
         }
     },
 
 
     computed: {
         isFavorite: function isFavorite() {
-            return this.favorite;
-        },
-        route: function route() {
-            if (this.favorited) {
-                return this.url + '/unfavorite/' + this.ad;
-            } else {
-                return this.url + '/favorite/' + this.ad;
-            }
+            return this.favorited;
         }
     },
 
     methods: {
-        favoriteAd: function favoriteAd(ad) {
-            this.$http.post(this.route, ad).then(function (response) {
-                this.favorited = true;
-            }, function (response) {
-                console.log(response.data);
+        favorite: function favorite(post) {
+            var _this = this;
+
+            axios.post('/favorite/' + post).then(function (response) {
+                return _this.isFavorited = true;
+            }).catch(function (response) {
+                return console.log(response.data);
             });
         },
-        unFavoriteAd: function unFavoriteAd(ad) {
-            this.$http.post(this.route, ad).then(function (response) {
-                this.favorited = false;
-            }, function (response) {
-                console.log(response.data);
+        unFavorite: function unFavorite(post) {
+            var _this2 = this;
+
+            axios.post('/unfavorite/' + post).then(function (response) {
+                return _this2.isFavorited = false;
+            }).catch(function (response) {
+                return console.log(response.data);
             });
         }
     }
@@ -31736,30 +31733,30 @@ module.exports = function normalizeComponent (
 /***/ (function(module, exports, __webpack_require__) {
 
 module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
-  return _c('span', [(!_vm.favorited) ? _c('a', {
+  return _c('span', [(!_vm.isFavorited) ? _c('a', {
     attrs: {
       "href": "#"
     },
     on: {
       "click": function($event) {
         $event.preventDefault();
-        _vm.favoriteAd(_vm.ad)
+        _vm.favorite(_vm.post)
       }
     }
   }, [_c('i', {
-    class: [_vm.favorited ? 'fa fa-heart' : 'fa fa-heart-o']
-  })]) : _vm._e(), _vm._v(" "), (_vm.favorited) ? _c('a', {
+    class: [_vm.isFavorited ? 'fa fa-heart' : 'fa fa-heart-o']
+  })]) : _vm._e(), _vm._v(" "), (_vm.isFavorited) ? _c('a', {
     attrs: {
       "href": "#"
     },
     on: {
       "click": function($event) {
         $event.preventDefault();
-        _vm.unFavoriteAd(_vm.ad)
+        _vm.unFavorite(_vm.post)
       }
     }
   }, [_c('i', {
-    class: [_vm.favorited ? 'fa fa-heart' : 'fa fa-heart-o']
+    class: [_vm.isFavorited ? 'fa fa-heart' : 'fa fa-heart-o']
   })]) : _vm._e()])
 },staticRenderFns: []}
 module.exports.render._withStripped = true

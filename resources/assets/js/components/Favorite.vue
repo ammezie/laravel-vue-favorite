@@ -1,61 +1,49 @@
 <template>
     <span>
-        <a href="#" v-if="!favorited" @click.prevent="favoriteAd(ad)">
-            <i v-bind:class="[ favorited ? 'fa fa-heart' : 'fa fa-heart-o' ]"></i>
+        <a href="#" v-if="!isFavorited" @click.prevent="favorite(post)">
+            <i  v-bind:class="[ isFavorited ? 'fa fa-heart' : 'fa fa-heart-o' ]"></i>
         </a>
-        <a href="#" v-if="favorited" @click.prevent="unFavoriteAd(ad)">
-            <i v-bind:class="[ favorited ? 'fa fa-heart' : 'fa fa-heart-o' ]"></i>
+        <a href="#" v-if="isFavorited" @click.prevent="unFavorite(post)">
+            <i  v-bind:class="[ isFavorited ? 'fa fa-heart' : 'fa fa-heart-o' ]"></i>
         </a>
     </span>
 </template>
 
 <script>
     export default {
-        props: ['ad', 'user', 'favorite'],
+        props: ['post', 'favorited'],
 
         data: function() {
             return {
-                favorited: '',
+                isFavorited: '',
             }
         },
 
         mounted() {
             if (this.isFavorite) {
-                this.favorited = true;
+                this.isFavorited = true;
             } else {
-                this.favorited = false;
+                this.isFavorited = false;
             }
         },
 
         computed: {
             isFavorite() {
-                return this.favorite;
-            },
-
-            route() {
-                if (this.favorited) {
-                    return this.url+'/unfavorite/'+this.ad;
-                } else {
-                    return this.url+'/favorite/'+this.ad;
-                }
+                return this.favorited;
             },
         },
 
         methods: {
-            favoriteAd(ad) {
-                this.$http.post(this.route, ad).then(function(response) {
-                    this.favorited = true;
-                }, function (response) {
-                    console.log(response.data);
-                });
+            favorite(post) {
+                axios.post('/favorite/'+post)
+                    .then(response => this.isFavorited = true)
+                    .catch(response => console.log(response.data));
             },
 
-            unFavoriteAd(ad) {
-                this.$http.post(this.route, ad).then(function(response) {
-                    this.favorited = false;
-                }, function (response) {
-                    console.log(response.data);
-                });
+            unFavorite(post) {
+                axios.post('/unfavorite/'+post)
+                    .then(response => this.isFavorited = false)
+                    .catch(response => console.log(response.data));
             },
         }
     }

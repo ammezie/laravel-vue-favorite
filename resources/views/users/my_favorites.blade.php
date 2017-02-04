@@ -4,6 +4,9 @@
 <div class="container">
     <div class="row">
         <div class="col-md-8 col-md-offset-2">
+            <div class="page-header">
+                <h3>My Favorites</h3>
+            </div>
             @forelse ($myFavorites as $myFavorite)
                 <div class="panel panel-default">
                     <div class="panel-heading">
@@ -15,14 +18,10 @@
                     </div>
                     @if (Auth::check())
                         <div class="panel-footer">
-                            <form action="{{ url('favorite/'. $myFavorite->id) }}" method="POST">
-                                {{ csrf_field() }}
-                                <button type="submit">
-                                    <i class="fa fa-{{ ($favoritePosts->contains($myFavorite->id)) ? 'heart' : 'heart-o' }}"></i>
-                                </button>
-                            </form>
-                            {{-- <favorite></favorite>
-                            <span>23</span> --}}
+                            <favorite
+                                :post={{ $myFavorite->id }}
+                                :favorited={{ $myFavorite->favorited() ? 'true' : 'false' }}
+                            ></favorite>
                         </div>
                     @endif
                 </div>
