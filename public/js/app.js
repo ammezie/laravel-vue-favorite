@@ -12078,11 +12078,12 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     },
 
     mounted: function mounted() {
-        if (this.isFavorite) {
-            this.isFavorited = true;
-        } else {
-            this.isFavorited = false;
-        }
+        // if (this.isFavorite) {
+        //     this.isFavorited = true;
+        // } else {
+        //     this.isFavorited = false;
+        // }
+        this.isFavorited = this.isFavorite ? true : false;
     },
 
 
@@ -31733,19 +31734,7 @@ module.exports = function normalizeComponent (
 /***/ (function(module, exports, __webpack_require__) {
 
 module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
-  return _c('span', [(!_vm.isFavorited) ? _c('a', {
-    attrs: {
-      "href": "#"
-    },
-    on: {
-      "click": function($event) {
-        $event.preventDefault();
-        _vm.favorite(_vm.post)
-      }
-    }
-  }, [_c('i', {
-    class: [_vm.isFavorited ? 'fa fa-heart' : 'fa fa-heart-o']
-  })]) : _vm._e(), _vm._v(" "), (_vm.isFavorited) ? _c('a', {
+  return _c('span', [(_vm.isFavorited) ? _c('a', {
     attrs: {
       "href": "#"
     },
@@ -31756,8 +31745,20 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       }
     }
   }, [_c('i', {
-    class: [_vm.isFavorited ? 'fa fa-heart' : 'fa fa-heart-o']
-  })]) : _vm._e()])
+    staticClass: "fa fa-heart"
+  })]) : _c('a', {
+    attrs: {
+      "href": "#"
+    },
+    on: {
+      "click": function($event) {
+        $event.preventDefault();
+        _vm.favorite(_vm.post)
+      }
+    }
+  }, [_c('i', {
+    staticClass: "fa fa-heart-o"
+  })])])
 },staticRenderFns: []}
 module.exports.render._withStripped = true
 if (false) {

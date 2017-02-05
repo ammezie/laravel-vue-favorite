@@ -1,10 +1,10 @@
 <template>
     <span>
-        <a href="#" v-if="!isFavorited" @click.prevent="favorite(post)">
-            <i  v-bind:class="[ isFavorited ? 'fa fa-heart' : 'fa fa-heart-o' ]"></i>
-        </a>
         <a href="#" v-if="isFavorited" @click.prevent="unFavorite(post)">
-            <i  v-bind:class="[ isFavorited ? 'fa fa-heart' : 'fa fa-heart-o' ]"></i>
+            <i  class="fa fa-heart"></i>
+        </a>
+        <a href="#" v-else @click.prevent="favorite(post)">
+            <i  class="fa fa-heart-o"></i>
         </a>
     </span>
 </template>
@@ -20,11 +20,7 @@
         },
 
         mounted() {
-            if (this.isFavorite) {
-                this.isFavorited = true;
-            } else {
-                this.isFavorited = false;
-            }
+            this.isFavorited = this.isFavorite ? true : false;
         },
 
         computed: {
@@ -44,7 +40,7 @@
                 axios.post('/unfavorite/'+post)
                     .then(response => this.isFavorited = false)
                     .catch(response => console.log(response.data));
-            },
+            }
         }
     }
 </script>
