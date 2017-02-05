@@ -35,6 +35,20 @@ Next install `NPM` dependencies:
 npm install
 ```
 
+### Migrations And Database Seeder
+
+Be sure to fill in your database details in your `.env` file before running the migrations:
+
+```
+php artisan migration
+```
+
+You can also use the dummy data by running:
+
+```
+php artisan db:seed
+```
+
 And finally, start the application:
 
 ```
